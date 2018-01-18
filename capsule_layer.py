@@ -10,7 +10,6 @@ from torch.autograd import Variable
 from torchvision import datasets, transforms
 import torch.nn.functional as F
 
-
 class ConvUnit(nn.Module):
     def __init__(self, in_channels):
         super(ConvUnit, self).__init__()
@@ -99,7 +98,9 @@ class CapsuleLayer(nn.Module):
         for iteration in range(num_iterations):
             # Convert routing logits to softmax.
             # (batch, features, num_units, 1, 1)
-            c_ij = F.softmax(b_ij)
+            #c_ij = F.softmax(b_ij)
+            c_ij = F.log_softmax(b_ij)
+            #c_ij = F.softshrink(c_ij,lambd=0.3)
             c_ij = torch.cat([c_ij] * batch_size, dim=0).unsqueeze(4)
 
             # Apply routing (c_ij) to weighted inputs (u_hat).

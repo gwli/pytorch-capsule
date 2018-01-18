@@ -16,6 +16,11 @@ from capsule_network import CapsuleNetwork
 # Settings.
 #
 
+#import ptvsd
+#ptvsd.enable_attach('pytorch',address=('0.0.0.0',5022))
+#ptvsd.wait_for_attach()
+#ptvsd.break_into_debugger()
+
 learning_rate = 0.01
 
 batch_size = 128
@@ -34,10 +39,10 @@ dataset_transform = transforms.Compose([
                        transforms.Normalize((0.1307,), (0.3081,))
                    ])
 
-train_dataset = datasets.MNIST('../data', train=True, download=True, transform=dataset_transform)
+train_dataset = datasets.MNIST('./data', train=True, download=True, transform=dataset_transform)
 train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 
-test_dataset = datasets.MNIST('../data', train=False, download=True, transform=dataset_transform)
+test_dataset = datasets.MNIST('./data', train=False, download=True, transform=dataset_transform)
 test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=test_batch_size, shuffle=True)
 
 #
